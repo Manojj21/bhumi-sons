@@ -1,7 +1,5 @@
-import React from "react";
-
-// Google Fonts: Add this in your public/index.html <head> or load dynamically
-// <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+import React, { useEffect, useState } from "react";
+import { FaHome, FaInfoCircle, FaCogs, FaProjectDiagram, FaEnvelope } from "react-icons/fa";
 
 const services = [
   {
@@ -39,27 +37,39 @@ const projects = [
 ];
 
 function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <nav className="fixed w-full bg-white shadow-md z-50 font-['Roboto']">
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 backdrop-blur-md ${
+        scrolled ? "bg-white/70 shadow-lg" : "bg-transparent"
+      } font-['Roboto']`}
+    >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <div className="text-2xl font-extrabold text-[#3b3a30] cursor-default">
-          Bhumi and Sons Pty Ltd
+        <div className="text-2xl font-extrabold text-[#3b3a30] cursor-default drop-shadow-sm">
+          Bhumi & Sons Pty Ltd
         </div>
-        <div className="space-x-8 text-gray-700 font-medium">
-          <a href="#home" className="hover:text-[#b88c4a] transition duration-300">
-            Home
+        <div className="space-x-8 text-gray-700 font-semibold flex items-center">
+          <a href="#home" className="hover:text-[#b88c4a] transition duration-300 flex items-center gap-1">
+            <FaHome /> Home
           </a>
-          <a href="#about" className="hover:text-[#b88c4a] transition duration-300">
-            About
+          <a href="#about" className="hover:text-[#b88c4a] transition duration-300 flex items-center gap-1">
+            <FaInfoCircle /> About
           </a>
-          <a href="#services" className="hover:text-[#b88c4a] transition duration-300">
-            Services
+          <a href="#services" className="hover:text-[#b88c4a] transition duration-300 flex items-center gap-1">
+            <FaCogs /> Services
           </a>
-          <a href="#projects" className="hover:text-[#b88c4a] transition duration-300">
-            Projects
+          <a href="#projects" className="hover:text-[#b88c4a] transition duration-300 flex items-center gap-1">
+            <FaProjectDiagram /> Projects
           </a>
-          <a href="#contact" className="hover:text-[#b88c4a] transition duration-300">
-            Contact
+          <a href="#contact" className="hover:text-[#b88c4a] transition duration-300 flex items-center gap-1">
+            <FaEnvelope /> Contact
           </a>
         </div>
       </div>
@@ -79,9 +89,9 @@ function Home() {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-black bg-opacity-60 p-12 rounded-lg max-w-3xl">
-        <h1 className="text-5xl font-extrabold mb-6 text-white font-['Roboto'] drop-shadow-lg">
-          Welcome to Bhumi and Sons Pty Ltd
+      <div className="bg-black bg-opacity-60 p-12 rounded-lg max-w-3xl animate-fadeIn">
+        <h1 className="text-5xl font-extrabold mb-6 text-white font-['Roboto'] drop-shadow-lg tracking-wide">
+          Welcome to Bhumi & Sons Pty Ltd
         </h1>
         <p className="text-xl text-gray-200 max-w-xl mx-auto leading-relaxed drop-shadow-md">
           Your trusted partner in construction and building solutions. Quality
@@ -96,12 +106,12 @@ function About() {
   return (
     <section
       id="about"
-      className="py-16 px-6 max-w-5xl mx-auto font-['Roboto'] text-gray-800"
+      className="py-16 px-6 max-w-5xl mx-auto font-['Roboto'] text-gray-800 animate-fadeIn"
     >
-      <h2 className="text-4xl font-bold mb-8 text-center text-[#3b3a30]">
+      <h2 className="text-4xl font-bold mb-8 text-center text-[#3b3a30] tracking-wide">
         About Us
       </h2>
-      <p className="max-w-3xl mx-auto text-lg leading-relaxed">
+      <p className="max-w-3xl mx-auto text-lg leading-relaxed tracking-wide">
         Bhumi and Sons Pty Ltd is a family-owned construction company committed
         to delivering top-quality building projects with professionalism and
         care. With years of experience, we bring your vision to life with
@@ -115,20 +125,20 @@ function Services() {
   return (
     <section
       id="services"
-      className="bg-[#f3f1e7] py-16 px-6 font-['Roboto'] text-gray-800"
+      className="bg-[#f3f1e7] py-16 px-6 font-['Roboto'] text-gray-800 animate-fadeIn"
     >
-      <h2 className="text-4xl font-bold mb-12 text-center text-[#3b3a30]">
+      <h2 className="text-4xl font-bold mb-12 text-center text-[#3b3a30] tracking-wide">
         Our Services
       </h2>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         {services.map(({ icon, title, desc }, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300"
+            className="bg-white rounded-lg shadow-lg p-8 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300 cursor-pointer transform hover:-translate-y-1"
           >
-            <div className="text-6xl mb-4">{icon}</div>
-            <h3 className="text-2xl font-semibold mb-2 text-[#b88c4a]">{title}</h3>
-            <p className="text-gray-700">{desc}</p>
+            <div className="text-7xl mb-6">{icon}</div>
+            <h3 className="text-2xl font-semibold mb-3 text-[#b88c4a] tracking-wide">{title}</h3>
+            <p className="text-gray-700 leading-relaxed">{desc}</p>
           </div>
         ))}
       </div>
@@ -140,16 +150,16 @@ function Projects() {
   return (
     <section
       id="projects"
-      className="py-16 px-6 max-w-6xl mx-auto font-['Roboto'] text-gray-800"
+      className="py-16 px-6 max-w-6xl mx-auto font-['Roboto'] text-gray-800 animate-fadeIn"
     >
-      <h2 className="text-4xl font-bold mb-12 text-center text-[#3b3a30]">
+      <h2 className="text-4xl font-bold mb-12 text-center text-[#3b3a30] tracking-wide">
         Projects
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
         {projects.map(({ title, img }, idx) => (
           <div
             key={idx}
-            className="rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+            className="rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer transform hover:scale-[1.03]"
           >
             <img
               src={img}
@@ -158,7 +168,7 @@ function Projects() {
               loading="lazy"
             />
             <div className="p-4 bg-white">
-              <h3 className="text-lg font-semibold text-[#3b3a30]">{title}</h3>
+              <h3 className="text-lg font-semibold text-[#3b3a30] tracking-wide">{title}</h3>
             </div>
           </div>
         ))}
@@ -171,9 +181,9 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="bg-[#f3f1e7] py-16 px-6 max-w-4xl mx-auto font-['Roboto'] text-gray-800 rounded-lg shadow-lg"
+      className="bg-[#f3f1e7] py-16 px-6 max-w-4xl mx-auto font-['Roboto'] text-gray-800 rounded-lg shadow-lg animate-fadeIn"
     >
-      <h2 className="text-4xl font-bold mb-8 text-center text-[#3b3a30]">
+      <h2 className="text-4xl font-bold mb-8 text-center text-[#3b3a30] tracking-wide">
         Contact Us
       </h2>
       <form
@@ -186,24 +196,24 @@ function Contact() {
         <input
           type="text"
           placeholder="Your Name"
-          className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a]"
+          className="w-full p-4 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a] text-lg"
           required
         />
         <input
           type="email"
           placeholder="Your Email"
-          className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a]"
+          className="w-full p-4 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a] text-lg"
           required
         />
         <textarea
           placeholder="Your Message"
           rows={5}
-          className="w-full p-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a]"
+          className="w-full p-4 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-[#b88c4a] text-lg resize-none"
           required
         />
         <button
           type="submit"
-          className="w-full bg-[#b88c4a] text-white py-3 font-semibold rounded hover:bg-[#997534] transition-colors duration-300"
+          className="w-full bg-gradient-to-r from-[#b88c4a] to-[#997534] text-white py-4 font-semibold rounded shadow-lg hover:from-[#997534] hover:to-[#b88c4a] transition-colors duration-300"
         >
           Send Message
         </button>
@@ -216,14 +226,14 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 scroll-smooth bg-white">
+      <main className="pt-20 scroll-smooth bg-white selection:bg-[#b88c4a] selection:text-white">
         <Home />
         <About />
         <Services />
         <Projects />
         <Contact />
-        <footer className="text-center py-8 text-gray-500 font-['Roboto']">
-          © {new Date().getFullYear()} Bhumi and Sons Pty Ltd. All rights reserved.
+        <footer className="text-center py-8 text-gray-500 font-['Roboto'] tracking-wide select-none">
+          © {new Date().getFullYear()} Bhumi & Sons Pty Ltd. All rights reserved.
         </footer>
       </main>
     </>
